@@ -1,5 +1,4 @@
-from lib.job_application import *
-
+from lib.job_application import Application
 
 class ApplicationsRepository:
     def __init__(self, connection):
@@ -7,7 +6,7 @@ class ApplicationsRepository:
     
     def add_application(self, application):
         self._connection.execute(
-            'INSERT INTO applications (company, title, location, salary, date_applied) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)',
+            'INSERT INTO applications (company, title, location, salary, date_applied) VALUES (%s, %s, %s, %s, %s)',
             [
                 application.company,
                 application.title,
@@ -16,13 +15,13 @@ class ApplicationsRepository:
                 application.date_applied,
             ]
         )
-        return None
+        return application  
     
     def all_applications(self):
         rows = self._connection.execute('SELECT * FROM applications')
         applications = []
         for row in rows:
-            item = Applications(row['id'], row['company'], row['title'], row['location'], row['salary'], row['date_applied'])
+            item = Application(row['id'], row['company'], row['title'], row['location'], row['salary'], row['date_applied'])
             applications.append(item)
         return applications
     
@@ -31,20 +30,19 @@ class ApplicationsRepository:
             'DELETE FROM applications WHERE id = %s',
             [id]
         )
-        return None
     
     def update_application(self, application):
         self._connection.execute(
-            'UPDATE applications SET company = %s, title = %s, location = %s, salary = %s, date_applied = %s',
+            'UPDATE applications SET company = %s, title = %s, location = %s, salary = %s, date_applied = %s WHERE id = %s',
             [
                 application.company,
                 application.title,
                 application.location,
                 application.salary,
                 application.date_applied,
+                application.id  
             ]
         )
-        return None
     
     def find_by_company_name(self, company):
         rows = self._connection.execute(
@@ -53,7 +51,7 @@ class ApplicationsRepository:
         )
         applications = []
         for row in rows:
-            item = Applications(row['id'], row['company'], row['title'], row['location'], row['salary'])
+            item = Application(row['id'], row['company'], row['title'], row['location'], row['salary'], row['date_applied'])
             applications.append(item)
         return applications
     
@@ -64,16 +62,6 @@ class ApplicationsRepository:
         )
         applications = []
         for row in rows:
-            item = Applications(row['id'], row['company'], row['title'], row['location'], row['salary'])
+            item = Application(row['id'], row['company'], row['title'], row['location'], row['salary'], row['date_applied'])
             applications.append(item)
         return applications
-    
-
-        
-    
-    
-    
-    
-
-    
-

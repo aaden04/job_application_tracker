@@ -1,4 +1,4 @@
-class Applications:
+class Application:
 
     def __init__(self, id, comapny, title, location, salary, date_applied,):
         self.id = id
