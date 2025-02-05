@@ -12,5 +12,20 @@ def signup():
 
     return render_template('signup.html')
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        # Placeholder logic - replace with actual authentication
+        if email == "testuser@example.com" and password == "password123":
+            return f"Welcome, {email}!"
+        else:
+            return "Invalid credentials, please try again."
+
+    return render_template('login.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
