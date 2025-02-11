@@ -12,7 +12,6 @@ class Application:
         return self.__dict__ == other.__dict__
     
     def __repr__(self):
-        return f"This is application no. ({self.id} at {self.company} for a {self.title}. 
-        This role is in, {self.location} and the salary is {self.salary}. 
-        This application was submitted on {self.date_applied})"
-    
+        return f"This is application no. {self.id} at {self.company} for a {self.title}. This role is in {self.location} and the salary is {self.salary}. This application was submitted on {self.date_applied}"
+
+
