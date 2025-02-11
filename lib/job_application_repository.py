@@ -1,4 +1,5 @@
-from lib.job_application import Application
+from job_application import Application
+from database_connection import DatabaseConnection
 
 class ApplicationsRepository:
     def __init__(self, connection):
@@ -65,3 +66,13 @@ class ApplicationsRepository:
             item = Application(row['id'], row['company'], row['title'], row['location'], row['salary'], row['date_applied'])
             applications.append(item)
         return applications
+
+
+
+
+
+
+# Replace with proper usage:
+application = Application(None, 'google', 'Software Engineer', 'Mountain View', 100000, '2024-01-20')
+repository = ApplicationsRepository(connection)
+repository.add_application(application)
