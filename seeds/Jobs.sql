@@ -40,6 +40,7 @@ INSERT INTO progress (status, interview_date, decison, applications_id) VALUES (
 INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 4);
 INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 5);
 INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 6);
+INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 7);
 
 
 
