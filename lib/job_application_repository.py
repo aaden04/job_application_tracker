@@ -72,7 +72,4 @@ class ApplicationsRepository:
 
 
 
-# Replace with proper usage:
-application = Application(None, 'google', 'Software Engineer', 'Mountain View', 100000, '2024-01-20')
-repository = ApplicationsRepository(connection)
-repository.add_application(application)
+
