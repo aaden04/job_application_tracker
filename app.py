@@ -3,7 +3,7 @@ from flask import Flask, render_template, request
 app = Flask(__name__, template_folder="frontend/templates")
 
 @app.route('/', methods=['GET', 'POST'])
-def login():
+def login():pyt
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
