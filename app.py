@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request
 
-app = Flask(__name__, template_folder="frontend/templates")
+app = Flask(__name__, 
+            template_folder="frontend/templates",
+            static_folder="frontend/static")
 
 @app.route('/', methods=['GET', 'POST'])
-def login():pyt
+def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
