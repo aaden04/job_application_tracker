@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__, 
             template_folder="frontend/templates",
-            static_folder="frontend/static")
+            static_folder="frontend/staticgit")
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
