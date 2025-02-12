@@ -6,12 +6,12 @@ class UserRepository:
     def __init__(self, connection):
         self._connection = connection
 
-    def create(self, name, email, phone_number, password):
+    def create(self, name, email, password):
         binary_password = password.encode("utf-8")
         hashed_password = hashlib.sha256(binary_password).hexdigest()
         self._connection.execute(
-            'INSERT INTO users (name, email, phone_number, hashed_password) VALUES (%s, %s, %s, %s)', 
-            [name.title(), email.lower(), phone_number.strip(), hashed_password]
+            'INSERT INTO users (name, email,hashed_password) VALUES (%s, %s, %s)', 
+            [name.title(), email.lower(), hashed_password]
         )
 
     def check_password(self, email, password_attempt):
@@ -27,9 +27,8 @@ class UserRepository:
         rows = self._connection.execute("SELECT * FROM users WHERE email = %s", [email])
         id = rows[0]['id']
         hashed_password = rows[0]['hashed_password']
-        phone_number = rows[0]['phone_number']
         name = rows[0]['name']
-        user = User(id, name, email, phone_number, hashed_password)
+        user = User(id, name, email, hashed_password)
         return user
 
     def all(self):
@@ -40,7 +39,6 @@ class UserRepository:
                 row["id"],
                 row["name"],
                 row["email"],
-                row["phone_number"],
                 row["hashed_password"]
             )
             users.append(person)
@@ -53,6 +51,5 @@ class UserRepository:
             row["id"], 
             row["name"], 
             row["email"], 
-            row["phone_number"], 
             row["hashed_password"]
         )
