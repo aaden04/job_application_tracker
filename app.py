@@ -1,20 +1,34 @@
 from flask import Flask, render_template, request
+from lib.database_connection import DatabaseConnection
+from lib.user_repository import UserRepository
+from lib.user import User
+
+from lib.job_application import Application
 
 app = Flask(__name__, template_folder="frontend/templates")
+
+
+db_connection = DatabaseConnection()
+db_connection.connect()
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
-        password = request.form['password']
+        password_attempt = request.form['password']
+        
+        user_repo = UserRepository(db_connection)
+        
+        if user_repo.check_password(email, password_attempt):  
+            user = user_repo.find_by_email(email)  
 
-        # Placeholder logic - replace with actual authentication
-        if email == "testuser@example.com" and password == "password123":
-            return f"Welcome, {email}!"
+            return f"Welcome, {user.name}!"  
         else:
             return "Invalid credentials, please try again."
 
     return render_template('login.html')
+
+
 
 
 
