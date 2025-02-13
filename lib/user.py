@@ -1,9 +1,9 @@
 class User:
-    def __init__(self, id, name, email, hashed_password):
+    def __init__(self, id, name, email, password):
         self.id = id
         self.name = name
         self.email = email
-        self.hashed_password = hashed_password
+        self.password = password
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
