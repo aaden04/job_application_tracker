@@ -15,20 +15,26 @@ db_connection.connect()
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        password_attempt = request.form['password']
-        
-        user_repo = UserRepository(db_connection)
-        
-        if user_repo.check_password(email, password_attempt):  
-            user = user_repo.find_by_email(email)  
+    email = request.form['email']
+    password = request.form['password']
 
-            return f"Welcome, {user.name}!"  
-        else:
-            return "Invalid credentials, please try again."
+    connection = get_flask_database_connection(app)
 
-    return render_template('login.html')
+    user_repository = UserRepository(connection)
+
+    users = user_repository.all()
+    
+    if user_repository.check_password(email, password):
+
+        id = user_repository.find_by_email(email).id
+        session["id"] = id
+        return redirect(f"/applications")
+
+    else:
+        
+        return render_template("login.html", error=True, email=email, password=password)
+
+
 
 @app.route('/applications', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def applications():
