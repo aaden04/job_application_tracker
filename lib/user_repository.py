@@ -12,7 +12,7 @@ class UserRepository:
         self._connection.execute(
 
             'INSERT INTO users (name, email, phone_number, password) VALUES (%s, %s, %s, %s)', 
-            [name.title(), email.lower(), phone_number.strip(), hashed_password]
+            [name.title(), email.lower(), hashed_password]
 
         )
 
