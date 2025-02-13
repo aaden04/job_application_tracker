@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, render_template, session, redirect 
+from flask import Flask, render_template, request, render_template, session, redirect, url_for
 from lib.database_connection import *
 from lib.user_repository import UserRepository
 from lib.user import *
@@ -10,7 +10,7 @@ import os
 load_dotenv()
 app = Flask(__name__, 
             template_folder="frontend/templates",
-            static_folder="frontend/staticgit")
+            static_folder="frontend/static")
 secret_key = os.environ.get("SECRET_KEY")
 if secret_key == None:
     raise Exception("Secret key is required! Add SECRET_KEY to .env file")
