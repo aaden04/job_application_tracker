@@ -11,27 +11,31 @@ class UserRepository:
         self._connection.execute(
 
             'INSERT INTO users (name, email, password) VALUES (%s, %s, %s)', 
-            [name.title(), email.lower(), password]
+            [name, email, password]
 
         )
 
     def check_password(self, email, password_attempt):
-    
         rows = self._connection.execute(
             "SELECT * FROM users WHERE email = %s AND password = %s", 
             [email, password_attempt]
         )
         return len(rows) > 0
+    
+
+
 
     def find_by_email(self, email):
         rows = self._connection.execute("SELECT * FROM users WHERE email = %s", [email])
-        id = rows[0]['id']
+        if not rows:  
+            return None  
 
-        password = rows[0]['password']
-        name = rows[0]['name']
-        user = User(id, name, email, password)
-
+        user_data = rows[0]  
+        if 'id' not in user_data or 'name' not in user_data or 'password' not in user_data:
+            return None  
+        user = User(user_data['id'], user_data['name'], email, user_data['password'])
         return user
+
 
     def all(self):
         rows = self._connection.execute('SELECT * FROM users')
@@ -46,6 +50,8 @@ class UserRepository:
             )
             users.append(person)
         return users
+    
+    
 
     def find(self, user_id):
         result = self._connection.execute("SELECT * FROM users WHERE id = %s", [user_id])

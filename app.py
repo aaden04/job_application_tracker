@@ -25,7 +25,7 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        # Placeholder logic - replace with actual authentication
+        
 
         connection = get_flask_database_connection(app)
         user_repository = UserRepository(connection)
@@ -38,45 +38,37 @@ def login():
         else:
             return "Invalid credentials, please try again."
     return render_template('login.html')
-@app.route('/applications', methods=['GET', 'POST', 'DELETE', 'PUT'])
-def applications():
-    return ":)"
-
-
-
-
-
-
-
-
-
 
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
-        return f"User {username} signed up successfully!"
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password = request.form.get('password')
 
-    return render_template('signup.html')
+        connection = get_flask_database_connection(app)
+        user_repository = UserRepository(connection)
 
-@app.route('/test-repository', methods=['GET'])
-def test_repository():
-    connection = get_flask_database_connection(app)
-    user_repository = UserRepository(connection)
+        existing_user = user_repository.find_by_email(email)
+        if existing_user:
+            return "User already exists. Try logging in.", 400
 
-    # Check if the email exists and the password is correct
-    email = 'jenny@gmail.com'  # Replace with a test email in your DB
-    password = 'password'       # Replace with the corresponding password
+        user_repository.create(name, email, password)
+        print(f"User {email} created successfully.")
+        
+        
+        new_user = user_repository.find_by_email(email)
+        if new_user:
+            session["id"] = new_user.id
+            return render_template('login.html')  
 
-    if user_repository.check_password(email, password):
-        user = user_repository.find_by_email(email)
-        return f"User found: {user.name}, ID: {user.id}"
-    else:
-        return "Login failed: Invalid email or password"
+        return "An error occurred. Please try again.", 500  
+
+    return render_template('signup.html')  
+
+
 
 
 if __name__ == '__main__':
