@@ -5,7 +5,9 @@ from lib.user import User
 
 from lib.job_application import Application
 
-app = Flask(__name__, template_folder="frontend/templates")
+app = Flask(__name__, 
+            template_folder="frontend/templates",
+            static_folder="frontend/staticgit")
 
 
 db_connection = DatabaseConnection()
@@ -27,6 +29,12 @@ def login():
             return "Invalid credentials, please try again."
 
     return render_template('login.html')
+
+@app.route('/applications', methods=['GET', 'POST', 'DELETE', 'PUT'])
+def applications():
+    return ":)"
+    
+
 
 
 

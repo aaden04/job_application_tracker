@@ -14,7 +14,7 @@ def test_create_user(db_connection):
     db_connection.seed("seeds/Jobs.sql")
     repository = UserRepository(db_connection)
 
-    repository.create("Bobby", "bobby@gmail.com", "07946477898", "qwerty123")
+    repository.create("Bobby", "bobby@gmail.com", "qwerty123")
     
     result = repository.all()
     assert len(result) == 7
@@ -22,5 +22,4 @@ def test_create_user(db_connection):
     
     assert new_user.name == "Bobby"
     assert new_user.email == "bobby@gmail.com"
-    assert new_user.phone_number == "07946477898"
     assert new_user.password == "qwerty123"

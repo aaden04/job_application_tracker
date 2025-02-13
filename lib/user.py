@@ -3,7 +3,7 @@ class User:
         self.id = id
         self.name = name
         self.email = email
-        self.password = hashed_password
+        self.hashed_password = hashed_password
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
