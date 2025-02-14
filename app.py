@@ -85,7 +85,7 @@ def dashboard():
 
 
 
-@app.route('/myprofile', methods=['GET', 'POST'])
+@app.route('/myprofile', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def myprofile():
     return "Placeholder for myprofile"
 
