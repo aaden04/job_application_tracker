@@ -1,5 +1,5 @@
-from job_application import Application
-from database_connection import *
+from lib.job_application import Application
+from lib.database_connection import *
 
 class ApplicationsRepository:
     def __init__(self, connection):

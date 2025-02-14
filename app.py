@@ -2,7 +2,9 @@ from flask import Flask, render_template, request, render_template, session, red
 from lib.database_connection import *
 from lib.user_repository import UserRepository
 from lib.user import *
+from lib.job_application_repository import ApplicationsRepository
 from lib.job_application import *
+
 from dotenv import load_dotenv
 import os
 
@@ -69,6 +71,39 @@ def signup():
     return render_template('signup.html')  
 
 
+
+
+
+@app.route('/dashboard', methods=['GET', 'POST'])
+def dashboard():
+    return "Placeholder for dashboard"
+
+# connection = get_flask_database_connection(app)
+# user_repository = UserRepository(connection)
+
+
+
+
+
+@app.route('/myprofile', methods=['GET', 'POST'])
+def myprofile():
+    return "Placeholder for myprofile"
+
+# connection = get_flask_database_connection(app)
+# user_repository = UserRepository(connection)
+# job_application_repository = ApplicationsRepository(connection)
+
+
+
+
+
+@app.route('/addjobs', methods=['GET', 'POST', 'DELETE', 'PUT'])
+def addjobs():
+    return "Placeholder for addjobs"
+
+# connection = get_flask_database_connection(app)
+# user_repository = UserRepository(connection)
+# job_application_repository = ApplicationsRepository(connection)
 
 
 if __name__ == '__main__':
