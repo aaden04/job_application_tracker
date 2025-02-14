@@ -9,7 +9,14 @@ class Application:
         self.date_applied = date_applied
 
     def __eq__(self, other):
-        return self.__dict__ == other.__dict__
+        return (
+            self.id == other.id and
+            self.company == other.company and
+            self.title == other.title and
+            self.location == other.location and
+            self.salary == other.salary and
+            self.date_applied == other.date_applied
+        )
     
     def __repr__(self):
         return f"This is application no. {self.id} at {self.company} for a {self.title}. This role is in {self.location} and the salary is {self.salary}. This application was submitted on {self.date_applied}"
