@@ -16,4 +16,4 @@ def test_progress_equality():
 
 def test_progress_format_string():
     progress = Progress(1, "Applied", "2023-01-01", "Accepted", 1)
-    assert str(progress) == "Application Number:1,Status:Applied,Interview Date:2023-01-01,Decison:Accepted)"
+    assert str(progress) == "Application Number:1,Status:Applied,Interview Date:2023-01-01,Decision:Accepted)"
