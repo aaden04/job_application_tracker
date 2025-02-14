@@ -123,11 +123,23 @@ def myprofile():
 
 @app.route('/addjobs', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def addjobs():
-    return "Placeholder for addjobs"
+    if request.method == 'POST':
+        company = request.form.get('company')
+        title = request.form.get('title')
+        location = request.form.get('location')
+        salary = request.form.get('salary')
+        date_applied = request.form.get('date_applied')
 
-# connection = get_flask_database_connection(app)
-# user_repository = UserRepository(connection)
-# job_application_repository = ApplicationsRepository(connection)
+        user_id = session.get("id")
+
+        connection = get_flask_database_connection(app)
+        job_application_repository = ApplicationsRepository(connection)
+        print(job_application_repository)
+        job_application_repository.add_application(company, title, location, salary, date_applied)
+
+        
+        
+    return render_template('add_jobs.html')
 
 
 if __name__ == '__main__':
