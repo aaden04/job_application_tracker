@@ -5,18 +5,18 @@ class ApplicationsRepository:
     def __init__(self, connection):
         self._connection = connection
     
-    def add_application(self, application):
+    def add_application(self, company, title, location, salary, date_applied):
         self._connection.execute(
             'INSERT INTO applications (company, title, location, salary, date_applied) VALUES (%s, %s, %s, %s, %s)',
             [
-                application.company,
-                application.title,
-                application.location,
-                application.salary,
-                application.date_applied,
+                company,
+                title,
+                location,
+                salary,
+                date_applied,
             ]
         )
-        return application  
+          
     
     def all_applications(self):
         rows = self._connection.execute('SELECT * FROM applications')
