@@ -78,8 +78,9 @@ def signup():
 def dashboard():
     connection = get_flask_database_connection(app)
     job_application_repository = ApplicationsRepository(connection)
-    applications = job_application_repository.all_applications()
-    return render_template('dashboard.html')
+    applications = job_application_repository.all_applications()  
+    return render_template('dashboard.html', applications=applications)  
+
     
 
 
@@ -87,8 +88,10 @@ def dashboard():
 def myprofile():
     if request.method == 'DELETE':
         id = request.form.get('id')
+        print(id)
         connection = get_flask_database_connection(app)
         job_application_repository = ApplicationsRepository(connection)
+        print(job_application_repository)
         job_application_repository.delete_application(id)
         
     if request.method == 'GET':
