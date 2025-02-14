@@ -32,16 +32,16 @@ class ApplicationsRepository:
             [id]
         )
     
-    def update_application(self, application):
+    def update_application(self, company, title, location, salary, date_applied, id):
         self._connection.execute(
             'UPDATE applications SET company = %s, title = %s, location = %s, salary = %s, date_applied = %s WHERE id = %s',
             [
-                application.company,
-                application.title,
-                application.location,
-                application.salary,
-                application.date_applied,
-                application.id  
+                company,
+                title,
+                location,
+                salary,
+                date_applied,
+                id  
             ]
         )
     

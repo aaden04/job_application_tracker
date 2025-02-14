@@ -74,24 +74,45 @@ def signup():
 
 
 
-@app.route('/dashboard', methods=['GET', 'POST'])
+@app.route('/dashboard', methods=['GET'])
 def dashboard():
-    return "Placeholder for dashboard"
-
-# connection = get_flask_database_connection(app)
-# user_repository = UserRepository(connection)
-
-
-
+    connection = get_flask_database_connection(app)
+    job_application_repository = ApplicationsRepository(connection)
+    applications = job_application_repository.all_applications()
+    return render_template('dashboard.html')
+    
 
 
-@app.route('/myprofile', methods=['GET', 'POST', 'DELETE', 'PUT'])
+@app.route('/myprofile', methods=['GET', 'DELETE', 'PUT'])
 def myprofile():
-    return "Placeholder for myprofile"
+    if request.method == 'DELETE':
+        id = request.form.get('id')
+        connection = get_flask_database_connection(app)
+        job_application_repository = ApplicationsRepository(connection)
+        job_application_repository.delete_application(id)
+        
+    if request.method == 'GET':
+        id = request.form.get('id')
+        connection = get_flask_database_connection(app)
+        job_application_repository = ApplicationsRepository(connection)
+        job_application_repository.all_applications()
+        
+    
 
-# connection = get_flask_database_connection(app)
-# user_repository = UserRepository(connection)
-# job_application_repository = ApplicationsRepository(connection)
+    
+    if request.method == 'PUT':
+        company = request.form.get('company')
+        title = request.form.get('title')
+        location = request.form.get('location')
+        salary = request.form.get('salary')
+        date_applied = request.form.get('date_applied')
+        id = request.form.get('id')
+        connection = get_flask_database_connection(app)
+        job_application_repository = ApplicationsRepository(connection)
+        job_application_repository.update_application(company, title, location, salary, date_applied, id)
+        
+    
+    return render_template('myprofile.html')
 
 
 
