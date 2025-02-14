@@ -36,7 +36,7 @@ def login():
         if user_repository.check_password(email, password):
             id = user_repository.find_by_email(email).id
             session["id"] = id
-            return render_template('applications.html')
+            return render_template('dashboard.html')
         else:
             return "Invalid credentials, please try again."
     return render_template('login.html')
