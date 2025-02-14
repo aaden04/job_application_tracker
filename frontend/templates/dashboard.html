@@ -1,0 +1,40 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Your Job Applications</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Salary</th>
+                <th>Date Applied</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+            <tr>
+                <td>{{ application.company }}</td>
+                <td>{{ application.title }}</td>
+                <td>{{ application.location }}</td>
+                <td>{{ application.salary }}</td>
+                <td>{{ application.date_applied }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">No job applications found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="/myprofile">Go to My Profile</a>
+</body>
+</html>
