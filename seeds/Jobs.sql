@@ -16,7 +16,7 @@ CREATE TABLE users (
 CREATE SEQUENCE IF NOT EXISTS applications_id_seq;
 CREATE TABLE applications (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id),
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
     company VARCHAR(255),
     title VARCHAR(255),
     location VARCHAR(255),
@@ -33,27 +33,37 @@ CREATE TABLE progress (
     applications_id INTEGER REFERENCES applications(id) ON DELETE CASCADE
 );
 
-
-INSERT INTO applications (company, title, location, salary, date_applied) VALUES ('Google', 'Software Engineer', 'London', 100000, '2023-01-01');
-INSERT INTO applications (company, title, location, salary, date_applied) VALUES ('Microsoft', 'Software Engineer', 'London', 100000, '2023-01-01');
-INSERT INTO applications (company, title, location, salary, date_applied) VALUES ('Amazon', 'Software Engineer', 'London', 100000, '2023-01-01');
-INSERT INTO applications (company, title, location, salary, date_applied) VALUES ('Facebook', 'Software Engineer', 'London', 100000, '2023-01-01');
-INSERT INTO applications (company, title, location, salary, date_applied) VALUES ('Apple', 'Software Engineer', 'London', 100000, '2023-01-01');
-INSERT INTO applications (company, title, location, salary, date_applied) VALUES ('Makers', 'DevOps Engineer', 'Watford', 100000, '2023-01-01');
-
-
-
-INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 1);
-INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 2);
-INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 3);
-INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 4);
-INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 5);
-INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 6);
-
-
+-- Insert users
 INSERT INTO users (name, email, password) VALUES ('John', 'john@gmail.com', 'password');
 INSERT INTO users (name, email, password) VALUES ('Jane', 'jane@gmail.com', 'password');
 INSERT INTO users (name, email, password) VALUES ('Jack', 'jack@gmail.com', 'password');
 INSERT INTO users (name, email, password) VALUES ('Jill', 'jill@gmail.com', 'password');
 INSERT INTO users (name, email, password) VALUES ('Joe', 'joe@gmail.com', 'password');
 INSERT INTO users (name, email, password) VALUES ('Jenny', 'jenny@gmail.com', 'password');
+
+-- Insert applications with user_id
+INSERT INTO applications (user_id, company, title, location, salary, date_applied) 
+VALUES (1, 'Google', 'Software Engineer', 'London', 100000, '2023-01-01');
+
+INSERT INTO applications (user_id, company, title, location, salary, date_applied) 
+VALUES (2, 'Microsoft', 'Software Engineer', 'London', 100000, '2023-01-01');
+
+INSERT INTO applications (user_id, company, title, location, salary, date_applied) 
+VALUES (3, 'Amazon', 'Software Engineer', 'London', 100000, '2023-01-01');
+
+INSERT INTO applications (user_id, company, title, location, salary, date_applied) 
+VALUES (4, 'Facebook', 'Software Engineer', 'London', 100000, '2023-01-01');
+
+INSERT INTO applications (user_id, company, title, location, salary, date_applied) 
+VALUES (5, 'Apple', 'Software Engineer', 'London', 100000, '2023-01-01');
+
+INSERT INTO applications (user_id, company, title, location, salary, date_applied) 
+VALUES (6, 'Makers', 'DevOps Engineer', 'Watford', 100000, '2023-01-01');
+
+-- Insert progress records
+INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 1);
+INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 2);
+INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 3);
+INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 4);
+INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 5);
+INSERT INTO progress (status, interview_date, decison, applications_id) VALUES ('Applied', '2023-01-01', 'Accepted', 6);

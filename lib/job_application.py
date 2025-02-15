@@ -1,12 +1,12 @@
 class Application:
-
-    def __init__(self, id, comapny, title, location, salary, date_applied,):
+    def __init__(self, id, company, title, location, salary, date_applied, user_id):
         self.id = id
-        self.company = comapny
+        self.company = company
         self.title = title
         self.location = location
         self.salary = salary
         self.date_applied = date_applied
+        self.user_id = user_id  
 
     def __eq__(self, other):
         return (
@@ -15,10 +15,9 @@ class Application:
             self.title == other.title and
             self.location == other.location and
             self.salary == other.salary and
-            self.date_applied == other.date_applied
+            self.date_applied == other.date_applied and
+            self.user_id == other.user_id
         )
-    
+
     def __repr__(self):
-        return f"This is application no. {self.id} at {self.company} for a {self.title}. This role is in {self.location} and the salary is {self.salary}. This application was submitted on {self.date_applied}"
-
-
+        return f"Application(id={self.id}, company='{self.company}', title='{self.title}', location='{self.location}', salary={self.salary}, date_applied='{self.date_applied}', user_id={self.user_id})"
