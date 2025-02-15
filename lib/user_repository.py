@@ -1,5 +1,4 @@
 from lib.database_connection import *
-import hashlib
 from lib.user import *
 
 class UserRepository:
@@ -7,62 +6,45 @@ class UserRepository:
         self._connection = connection
 
     def create(self, name, email, password):
-        
-        self._connection.execute(
-
-            'INSERT INTO users (name, email, password) VALUES (%s, %s, %s)', 
-            [name, email, password]
-
-        )
+        with self._connection.connection.cursor() as cursor:
+            cursor.execute(
+                'INSERT INTO users (name, email, password) VALUES (%s, %s, %s)', 
+                [name, email, password]
+            )
 
     def check_password(self, email, password_attempt):
-        rows = self._connection.execute(
-            "SELECT * FROM users WHERE email = %s AND password = %s", 
-            [email, password_attempt]
-        )
-        return len(rows) > 0
-    
-
-
+        with self._connection.connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM users WHERE email = %s AND password = %s", [email, password_attempt])
+            return cursor.fetchone() is not None  # Returns True if a user exists, False otherwise
 
     def find_by_email(self, email):
         rows = self._connection.execute("SELECT * FROM users WHERE email = %s", [email])
+    
         if not rows:  
             return None  
 
-        user_data = rows[0]  
-        if 'id' not in user_data or 'name' not in user_data or 'password' not in user_data:
-            return None  
-        user = User(user_data['id'], user_data['name'], email, user_data['password'])
-        return user
+        user_data = rows[0]  # Access first row
+
+        return User(user_data["id"], user_data["name"], user_data["email"], user_data["password"])  # Use column names
+
 
 
     def all(self):
-        rows = self._connection.execute('SELECT * FROM users')
-        users = []
-        for row in rows:
-            person = User(
-                row["id"],
-                row["name"],
-                row["email"],
-                row["password"]
+        with self._connection.connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM users')
+            rows = cursor.fetchall()
 
-            )
-            users.append(person)
-        return users
-    
-    
+        return [User(row[0], row[1], row[2], row[3]) for row in rows]  # Ensure correct column order
 
     def find(self, user_id):
-        result = self._connection.execute("SELECT * FROM users WHERE id = %s", [user_id])
-        row = result[0]
-        return User(
-            row["id"], 
-            row["name"], 
-            row["email"], 
-            row["password"]
+        with self._connection.connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM users WHERE id = %s", [user_id])
+            row = cursor.fetchone()
 
-        )
+        if row:
+            return User(row[0], row[1], row[2], row[3])  
+        return None  
+
     
 
 

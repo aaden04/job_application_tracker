@@ -2,15 +2,12 @@ from lib.progress import Progress
 from lib.database_connection import *
 
 class ProgressRepository:
-    def __init__(self, connection, applications_id=None):
-        self.applications_id = applications_id
+    def __init__(self, connection):
         self._connection = connection    
+
     def find_user_application(self, application_id):
-        result = self._connection.execute("SELECT * FROM progress WHERE applications_id = %s", [application_id])
-        return [Progress(
-            progess["id"],
-            progess["status"],
-            progess["interview_date"],
-            progess["decison"],
-            progess["applications_id"]
-        ) for progess in result]
+        with self._connection.connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM progress WHERE applications_id = %s", [application_id])
+            result = cursor.fetchall()
+
+        return [Progress(row[0], row[1], row[2], row[3], row[4]) for row in result]  

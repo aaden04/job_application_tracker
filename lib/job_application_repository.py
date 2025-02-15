@@ -1,75 +1,28 @@
-from lib.job_application import Application
-from lib.database_connection import *
-
 class ApplicationsRepository:
     def __init__(self, connection):
         self._connection = connection
-    
-    def add_application(self, company, title, location, salary, date_applied):
-        self._connection.execute(
-            'INSERT INTO applications (company, title, location, salary, date_applied) VALUES (%s, %s, %s, %s, %s)',
-            [
-                company,
-                title,
-                location,
-                salary,
-                date_applied,
-            ]
+
+    def get_user_applications(self, user_id):
+        with self._connection.connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM applications WHERE user_id = %s", [user_id])
+            return cursor.fetchall()
+
+    def add_application(self, company, title, location, salary, date_applied, user_id):
+        with self._connection.connection.cursor() as cursor:
+            cursor.execute(
+            "INSERT INTO applications (company, title, location, salary, date_applied, user_id) VALUES (%s, %s, %s, %s, %s, %s)",
+            [company, title, location, salary, date_applied, user_id]
         )
-          
-    
-    def all_applications(self):
-        rows = self._connection.execute('SELECT * FROM applications')
-        applications = []
-        for row in rows:
-            item = Application(row['id'], row['company'], row['title'], row['location'], row['salary'], row['date_applied'])
-            applications.append(item)
-        return applications
-    
-    def delete_application(self, id):
-        self._connection.execute(
-            'DELETE FROM applications WHERE id = %s',
-            [id]
-        )
-    
-    def update_application(self, company, title, location, salary, date_applied, id):
-        self._connection.execute(
-            'UPDATE applications SET company = %s, title = %s, location = %s, salary = %s, date_applied = %s WHERE id = %s',
-            [
-                company,
-                title,
-                location,
-                salary,
-                date_applied,
-                id  
-            ]
-        )
-    
-    def find_by_company_name(self, company):
-        rows = self._connection.execute(
-            'SELECT * FROM applications WHERE company = %s',
-            [company]
-        )
-        applications = []
-        for row in rows:
-            item = Application(row['id'], row['company'], row['title'], row['location'], row['salary'], row['date_applied'])
-            applications.append(item)
-        return applications
-    
-    def find_by_job_title(self, title):
-        rows = self._connection.execute(
-            'SELECT * FROM applications WHERE title = %s',
-            [title]
-        )
-        applications = []
-        for row in rows:
-            item = Application(row['id'], row['company'], row['title'], row['location'], row['salary'], row['date_applied'])
-            applications.append(item)
-        return applications
+        self._connection.connection.commit()  # <-- Ensure commit is on actual connection
 
 
+    def delete_application(self, application_id, user_id):
+        with self._connection.connection.cursor() as cursor:
+            cursor.execute("DELETE FROM applications WHERE id = %s AND user_id = %s", [application_id, user_id])
 
-
-
-
-
+    def update_application(self, company, title, location, salary, date_applied, application_id, user_id):
+        with self._connection.connection.cursor() as cursor:
+            cursor.execute(
+                "UPDATE applications SET company = %s, title = %s, location = %s, salary = %s, date_applied = %s WHERE id = %s AND user_id = %s",
+                [company, title, location, salary, date_applied, application_id, user_id]
+            )
