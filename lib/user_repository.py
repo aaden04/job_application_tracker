@@ -15,7 +15,7 @@ class UserRepository:
     def check_password(self, email, password_attempt):
         with self._connection.connection.cursor() as cursor:
             cursor.execute("SELECT * FROM users WHERE email = %s AND password = %s", [email, password_attempt])
-            return cursor.fetchone() is not None  # Returns True if a user exists, False otherwise
+            return cursor.fetchone() is not None  
 
     def find_by_email(self, email):
         rows = self._connection.execute("SELECT * FROM users WHERE email = %s", [email])
@@ -23,9 +23,9 @@ class UserRepository:
         if not rows:  
             return None  
 
-        user_data = rows[0]  # Access first row
+        user_data = rows[0]  
 
-        return User(user_data["id"], user_data["name"], user_data["email"], user_data["password"])  # Use column names
+        return User(user_data["id"], user_data["name"], user_data["email"], user_data["password"])  
 
 
 
@@ -34,7 +34,7 @@ class UserRepository:
             cursor.execute('SELECT * FROM users')
             rows = cursor.fetchall()
 
-        return [User(row[0], row[1], row[2], row[3]) for row in rows]  # Ensure correct column order
+        return [User(row[0], row[1], row[2], row[3]) for row in rows]  
 
     def find(self, user_id):
         with self._connection.connection.cursor() as cursor:

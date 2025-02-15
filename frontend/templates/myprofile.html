@@ -1,4 +1,3 @@
-<!-- myprofile.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,43 +8,43 @@
 <body>
     <h1>Manage Your Job Applications</h1>
 
-    <!-- Update or Delete a Job Application -->
-    <h2>Update or Delete Job Application</h2>
-    <form method="POST" action="/myprofile">
-        <input type="hidden" name="_method" value="PUT"> <!-- Used for PUT request -->
-        <label for="id">Application ID:</label>
-        <input type="text" id="id" name="id" required><br><br>
+    {% if applications %}
+        {% for application in applications %}
+            <form method="POST" action="{{ url_for('myprofile') }}">
+                <input type="hidden" name="id" value="{{ application.id }}">
+                
+                <label>Company:</label>
+                <input type="text" name="company" value="{{ application.company }}" required><br><br>
 
-        <label for="company">Company:</label>
-        <input type="text" id="company" name="company" required><br><br>
+                <label>Job Title:</label>
+                <input type="text" name="title" value="{{ application.title }}" required><br><br>
 
-        <label for="title">Job Title:</label>
-        <input type="text" id="title" name="title" required><br><br>
+                <label>Location:</label>
+                <input type="text" name="location" value="{{ application.location }}" required><br><br>
 
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" required><br><br>
+                <label>Salary:</label>
+                <input type="number" name="salary" value="{{ application.salary }}" required><br><br>
 
-        <label for="salary">Salary:</label>
-        <input type="number" id="salary" name="salary" required><br><br>
+                <label>Date Applied:</label>
+                <input type="date" name="date_applied" value="{{ application.date_applied }}" required><br><br>
 
-        <label for="date_applied">Date Applied:</label>
-        <input type="date" id="date_applied" name="date_applied" required><br><br>
+                
+                <input type="hidden" name="action" value="update">
+                <input type="submit" value="Update Application">
+            </form>
 
-        <input type="submit" value="Update Application">
-    </form>
+            
+            <form method="POST" action="{{ url_for('myprofile') }}">
+                <input type="hidden" name="id" value="{{ application.id }}">
+                <input type="hidden" name="action" value="delete">
+                <input type="submit" value="Delete Application" style="background-color: red; color: white;">
+            </form>
 
-    <hr>
-
-    <!-- Delete Job Application -->
-    <h2>Delete Job Application</h2>
-    <form method="POST" action="/myprofile">
-        <input type="hidden" name="_method" value="DELETE"> <!-- Used for DELETE request -->
-        <label for="delete_id">Application ID:</label>
-        <input type="text" id="delete_id" name="id" required><br><br>
-        <input type="submit" value="Delete Application">
-    </form>
-
-    <hr>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No job applications found.</p>
+    {% endif %}
 
     <a href="/dashboard">Back to Dashboard</a>
 </body>
