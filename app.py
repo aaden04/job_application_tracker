@@ -74,7 +74,7 @@ def dashboard():
 
     return render_template('dashboard.html', applications=applications)
 
-@app.route('/myprofile', methods=['GET', 'DELETE', 'PUT'])
+@app.route('/myprofile', methods=['GET', 'POST'])
 def myprofile():
     if "id" not in session:
         return redirect(url_for('login'))  
@@ -87,21 +87,34 @@ def myprofile():
         applications = job_application_repository.get_user_applications(user_id)
         return render_template('myprofile.html', applications=applications)
 
-    elif request.method == 'DELETE':
+    elif request.method == 'POST':
+        action = request.form.get('action')
         application_id = request.form.get('id')
-        job_application_repository.delete_application(application_id, user_id)  
 
-    elif request.method == 'PUT':
-        application_id = request.form.get('id')
-        company = request.form.get('company')
-        title = request.form.get('title')
-        location = request.form.get('location')
-        salary = request.form.get('salary')
-        date_applied = request.form.get('date_applied')
+        if not application_id:
+            return "Error: Application ID is required.", 400  
 
-        job_application_repository.update_application(company, title, location, salary, date_applied, application_id, user_id)
+        try:
+            if action == "delete":
+                job_application_repository.delete_application(application_id, user_id)
+                connection.commit()  
 
-    return render_template('myprofile.html')
+            elif action == "update":
+                company = request.form.get('company')
+                title = request.form.get('title')
+                location = request.form.get('location')
+                salary = request.form.get('salary')
+                date_applied = request.form.get('date_applied')
+
+                job_application_repository.update_application(
+                    company, title, location, salary, date_applied, application_id, user_id
+                )
+                connection.commit()  
+
+            return redirect(url_for('myprofile'))  
+
+        except Exception as e:
+            return f"An error occurred: {str(e)}", 500  
 
 @app.route('/addjobs', methods=['GET', 'POST'])
 def addjobs():
