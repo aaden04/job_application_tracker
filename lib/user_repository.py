@@ -36,18 +36,21 @@ class UserRepository:
 
         return [User(row[0], row[1], row[2], row[3]) for row in rows]  
 
-    def find(self, user_id):
+    def get_user(self, user_id):
         with self._connection.connection.cursor() as cursor:
             cursor.execute("SELECT * FROM users WHERE id = %s", [user_id])
-            row = cursor.fetchone()
-
-        if row:
-            return User(row[0], row[1], row[2], row[3])  
-        return None  
-
-    
+            return cursor.fetchone()
 
 
-    
+    def delete_user(self, user_id):
+        with self._connection.connection.cursor() as cursor:
+            cursor.execute("DELETE FROM users WHERE id = %s", [user_id])
+        self._connection.commit()
 
-
+    def update_user(self, user_id, name, email):
+        with self._connection.connection.cursor() as cursor:
+            cursor.execute(
+                "UPDATE users SET name = %s, email = %s WHERE id = %s",
+                [name, email, user_id]
+            )
+        self._connection.connection.commit()

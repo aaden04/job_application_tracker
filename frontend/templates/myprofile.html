@@ -4,8 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/myprofile.css') }}">
 </head>
 <body>
+    <div class="profile-header">
+        <div class="user-info">
+            <h2>Welcome, {{ user.name }}</h2>
+            <div class="user-details">
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Total Applications:</strong> {{ applications|length }}</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="top-navigation">
+        <a href="/dashboard" class="nav-btn">Back to Dashboard</a>
+        <a href="/logout" class="nav-btn logout-btn">Logout</a>
+    </div>
+    <div class="personal-info-section">
+    
+    </div>
+
     <h1>Manage Your Job Applications</h1>
 
     {% if applications %}
@@ -14,38 +34,56 @@
                 <input type="hidden" name="id" value="{{ application.id }}">
                 
                 <label>Company:</label>
-                <input type="text" name="company" value="{{ application.company }}" required><br><br>
+                <input type="text" name="company" value="{{ application.company }}" required>
 
                 <label>Job Title:</label>
-                <input type="text" name="title" value="{{ application.title }}" required><br><br>
+                <input type="text" name="title" value="{{ application.title }}" required>
 
                 <label>Location:</label>
-                <input type="text" name="location" value="{{ application.location }}" required><br><br>
+                <input type="text" name="location" value="{{ application.location }}" required>
 
                 <label>Salary:</label>
-                <input type="number" name="salary" value="{{ application.salary }}" required><br><br>
+                <input type="number" name="salary" value="{{ application.salary }}" required>
 
                 <label>Date Applied:</label>
-                <input type="date" name="date_applied" value="{{ application.date_applied }}" required><br><br>
+                <input type="date" name="date_applied" value="{{ application.date_applied }}" required>
 
+                <div class="form-actions">
+                    <input type="hidden" name="action" value="update">
+                    <input type="submit" value="Update Application" class="update-btn">
                 
-                <input type="hidden" name="action" value="update">
-                <input type="submit" value="Update Application">
+                    <button type="submit" name="action" value="delete" class="delete-btn">Delete Application</button>
+                </div>
             </form>
-
-            
-            <form method="POST" action="{{ url_for('myprofile') }}">
-                <input type="hidden" name="id" value="{{ application.id }}">
-                <input type="hidden" name="action" value="delete">
-                <input type="submit" value="Delete Application" style="background-color: red; color: white;">
-            </form>
-
             <hr>
         {% endfor %}
     {% else %}
-        <p>No job applications found.</p>
+        <p class="no-applications">No job applications found.</p>
     {% endif %}
-
-    <a href="/dashboard">Back to Dashboard</a>
 </body>
 </html>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<div class="personal-info-section">
+    <h2>Personal Information</h2>
+    <form method="POST" action="{{ url_for('myprofile') }}" class="profile-form">
+        <input type="hidden" name="action" value="update_profile">
+        
+        <label>Name:</label>
+        <input type="text" name="name" value="{{ user.name }}" required>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="{{ user.email }}" required>
+
+        <input type="submit" value="Update Personal Information" class="update-profile-btn">
+    </form>
+</div>
