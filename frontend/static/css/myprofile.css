@@ -18,7 +18,7 @@ h1 {
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 50px;  /* Increased margin for better spacing */
+    margin-bottom: 50px;  
 }
 
 form {
@@ -26,8 +26,8 @@ form {
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-top: 30px;     /* Added top margin */
-    margin-bottom: 30px;  /* Added bottom margin */
+    margin-top: 30px;     
+    margin-bottom: 30px;  
 }
 label {
     display: block;

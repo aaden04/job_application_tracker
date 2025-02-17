@@ -4,26 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Jobs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/addjobs.css') }}">
+
 </head>
 <body>
-    <h2>Add Jobs</h2>
-    <form action="/addjobs" method="POST">
-        <label for="company">company:</label>
-        <input type="text" id="company" name="company" required><br><br>
-        
-        <label for="title">title:</label>
-        <input type="text" id="title" name="title" required><br><br>
-        
-        <label for="location">location:</label>
-        <input type="text" id="location" name="location" required><br><br>
-        
-        <label for="salary">salary:</label>
-        <input type="number" id="salary" name="salary" required><br><br>
+    <div class="add-job-container">
+        <h1>Add a Job</h1>
 
-        <label for="date_applied">date_applied:</label>
-        <input type="date" id="date_applied" name="date_applied" required><br><br>
+        
+        <div class="top-navigation">
+            <a href="{{ url_for('myprofile') }}" class="nav-btn">Back to My Profile</a>
+        </div>
 
-        <button type="submit">Sign Up</button>
-    </form>
+        <form action="/addjobs" method="POST" class="job-form">
+            <label for="company">Company:</label>
+            <input type="text" id="company" name="company" required><br><br>
+            
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required><br><br>
+            
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required><br><br>
+            
+            <label for="salary">Salary:</label>
+            <input type="number" id="salary" name="salary" required><br><br>
+
+            <label for="date_applied">Date Applied:</label>
+            <input type="date" id="date_applied" name="date_applied" required><br><br>
+
+            <button type="submit" class="btn-submit">Add Job</button>
+        </form>
+    </div>
 </body>
 </html>
