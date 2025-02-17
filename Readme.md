@@ -18,3 +18,6 @@ A Flask-based web application to help you organize and track your job applicatio
 ```bash
 git clone https://github.com/aaden04/job_application_tracker.git
 cd job_application_tracker
+
+
+![Excalidraw Diagram](Job_Application_Tracker.png)
