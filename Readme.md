@@ -1,7 +1,7 @@
 
 # Job Application Tracker
 
-A Flask-based web application to help you organize and track your job applications efficiently.
+A Flask-based web application to help you organise and track your job applications efficiently.
 
 ![Excalidraw Diagram](Job_Application_Tracker.png)
 
