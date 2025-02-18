@@ -6,7 +6,7 @@ def test_progress_constructs():
     assert progress.id == 1
     assert progress.status == "Applied"
     assert progress.interview_date == "2023-01-01"
-    assert progress.decison == "Accepted"
+    assert progress.decision == "Accepted"
     assert progress.applications_id == 1
 
 def test_progress_equality():
@@ -16,4 +16,5 @@ def test_progress_equality():
 
 def test_progress_format_string():
     progress = Progress(1, "Applied", "2023-01-01", "Accepted", 1)
-    assert str(progress) == "Application Number:1,Status:Applied,Interview Date:2023-01-01,Decision:Accepted)"
+    expected = "Application Number:1, Status:Applied, Interview Date:2023-01-01, Decision:Accepted)"
+    assert str(progress) == expected
