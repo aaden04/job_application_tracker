@@ -7,24 +7,29 @@ class ApplicationsRepository:
             cursor.execute("SELECT * FROM applications WHERE user_id = %s", [user_id])
             return cursor.fetchall()
 
-    def add_application(self, company, title, location, salary, date_applied, user_id):
+    def add_application(self, company, title, location, salary, date_applied, user_id, status='Applied', interview_date=None, decision='Pending'):
         with self._connection.cursor() as cursor:
             cursor.execute(
-                "INSERT INTO applications (company, title, location, salary, date_applied, user_id) VALUES (%s, %s, %s, %s, %s, %s)",
-                [company, title, location, salary, date_applied, user_id]
+                """INSERT INTO applications 
+                (company, title, location, salary, date_applied, user_id, status, interview_date, decision) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                [company, title, location, salary, date_applied, user_id, status, interview_date, decision]
             )
-        self._connection.commit()  
+        self._connection.commit()
 
     def delete_application(self, application_id, user_id):
         with self._connection.cursor() as cursor:
             cursor.execute("DELETE FROM applications WHERE id = %s AND user_id = %s", [application_id, user_id])
         self._connection.commit()  
 
-    def update_application(self, company, title, location, salary, date_applied, application_id, user_id):
+    def update_application(self, company, title, location, salary, date_applied, application_id, user_id, status=None, interview_date=None, decision=None):
         with self._connection.cursor() as cursor:
             cursor.execute(
-                "UPDATE applications SET company = %s, title = %s, location = %s, salary = %s, date_applied = %s WHERE id = %s AND user_id = %s",
-                [company, title, location, salary, date_applied, application_id, user_id]
+                """UPDATE applications 
+                SET company = %s, title = %s, location = %s, salary = %s, date_applied = %s,
+                status = %s, interview_date = %s, decision = %s 
+                WHERE id = %s AND user_id = %s""",
+                [company, title, location, salary, date_applied, status, interview_date, decision, application_id, user_id]
             )
         self._connection.commit()  
 

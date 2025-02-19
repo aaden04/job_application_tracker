@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Jobs</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/addjobs.css') }}">
-
 </head>
 <body>
     <div class="add-job-container">
         <h1>Add a Job</h1>
-
         
         <div class="top-navigation">
             <a href="{{ url_for('myprofile') }}" class="nav-btn">Back to My Profile</a>
@@ -32,8 +30,28 @@
             <label for="date_applied">Date Applied:</label>
             <input type="date" id="date_applied" name="date_applied" required><br><br>
 
+            <h2>Application Progress</h2>
+            
+            <label for="status">Status:</label>
+            <select id="status" name="status" required>
+                <option value="Applied">Applied</option>
+                <option value="Interview Scheduled">Interview Scheduled</option>
+                <option value="Under Review">Under Review</option>
+                <option value="Offer">Offer</option>
+            </select><br><br>
+
+            <label for="interview_date">Interview Date:</label>
+            <input type="date" id="interview_date" name="interview_date"><br><br>
+
+            <label for="decision">Decision:</label>
+            <select id="decision" name="decision">
+                <option value="Pending">Pending</option>
+                <option value="Accepted">Accepted</option>
+                <option value="Rejected">Rejected</option>
+            </select><br><br>
+
             <button type="submit" class="btn-submit">Add Job</button>
         </form>
     </div>
 </body>
-</html>
+</html></html>
