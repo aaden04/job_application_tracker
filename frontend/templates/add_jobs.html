@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Jobs</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/addjobs.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 </head>
+{% include 'navbar.html' %}
 <body>
     <div class="add-job-container">
         <h1>Add a Job</h1>
         
-        <div class="top-navigation">
-            <a href="{{ url_for('myprofile') }}" class="nav-btn">Back to My Profile</a>
-        </div>
+      
 
         <form action="/addjobs" method="POST" class="job-form">
             <label for="company">Company:</label>
@@ -30,14 +29,13 @@
             <label for="date_applied">Date Applied:</label>
             <input type="date" id="date_applied" name="date_applied" required><br><br>
 
-            <h2>Application Progress</h2>
-            
-            <label for="status">Status:</label>
+            <label for="status">Application Status:</label>
             <select id="status" name="status" required>
                 <option value="Applied">Applied</option>
                 <option value="Interview Scheduled">Interview Scheduled</option>
                 <option value="Under Review">Under Review</option>
                 <option value="Offer">Offer</option>
+                <option value="Rejected">Rejected</option>
             </select><br><br>
 
             <label for="interview_date">Interview Date:</label>
@@ -48,10 +46,13 @@
                 <option value="Pending">Pending</option>
                 <option value="Accepted">Accepted</option>
                 <option value="Rejected">Rejected</option>
+                <option value="Withdrawn">Withdrawn</option>
             </select><br><br>
 
             <button type="submit" class="btn-submit">Add Job</button>
         </form>
     </div>
 </body>
-</html></html>
+</html>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
