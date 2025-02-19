@@ -4,7 +4,8 @@ from lib.user_repository import UserRepository
 from lib.user import *
 from lib.job_application_repository import ApplicationsRepository
 from lib.job_application import *
-
+from lib.progress_repository import ProgressRepository
+from lib.progress import *
 from dotenv import load_dotenv
 import os
 
@@ -150,18 +151,18 @@ def addjobs():
 
         connection = get_flask_database_connection(app)
         job_application_repository = ApplicationsRepository(connection)
-        
-        try:
-            job_application_repository.add_application(company, title, location, salary, date_applied, user_id)
-            flash('Job application added successfully!', 'success')
-            return redirect(url_for('dashboard'))
-        except Exception as e:
-            flash(f"Error adding application: {str(e)}", 'error')
-            return redirect(url_for('addjobs'))
+    
+        with connection.connection.cursor() as cursor:
+            cursor.execute(
+                "INSERT INTO applications (company, title, location, salary, date_applied, user_id) VALUES (%s, %s, %s, %s, %s, %s)",
+                [company, title, location, salary, date_applied, user_id]
+            )
+            connection.connection.commit()
+
+        flash('Job application added successfully!', 'success')
+        return redirect(url_for('dashboard'))
 
     return render_template('add_jobs.html')
-
-@app.route('/logout')
 def logout():
     session.clear()
     flash('You have been logged out successfully.', 'success')
@@ -169,3 +170,18 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+@app.route('/view_progress/<int:application_id>')
+def view_progress(application_id):
+    if "id" not in session:
+        return redirect(url_for('login'))
+        
+    user_id = session["id"]
+    connection = get_flask_database_connection(app)
+    progress_repository = ProgressRepository(connection)
+    job_application_repository = ApplicationsRepository(connection)
+   
+    progress = progress_repository.find_user_application(application_id)
+    application = job_application_repository.get_user_applications(user_id)
+    
+    return render_template('view_progress.html', progress=progress, application=application)

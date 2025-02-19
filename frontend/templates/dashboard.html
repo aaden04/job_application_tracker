@@ -1,4 +1,3 @@
-<!-- dashboard.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +15,9 @@
                 <th>Location</th>
                 <th>Salary</th>
                 <th>Date Applied</th>
+                <th>Status</th>
+                <th>Interview Date</th>
+                <th>Decision</th>
             </tr>
         </thead>
         <tbody>
@@ -26,10 +28,13 @@
                 <td>{{ application.location }}</td>
                 <td>{{ application.salary }}</td>
                 <td>{{ application.date_applied }}</td>
+                <td>{{ application.status }}</td>
+                <td>{{ application.interview_date }}</td>
+                <td>{{ application.decision }}</td>
             </tr>
             {% else %}
             <tr>
-                <td colspan="5">No job applications found.</td>
+                <td colspan="8">No job applications found.</td>
             </tr>
             {% endfor %}
         </tbody>
