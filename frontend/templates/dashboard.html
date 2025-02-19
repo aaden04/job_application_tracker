@@ -7,39 +7,92 @@
 </head>
 <body>
     <h1>Your Job Applications</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Company</th>
-                <th>Title</th>
-                <th>Location</th>
-                <th>Salary</th>
-                <th>Date Applied</th>
-                <th>Status</th>
-                <th>Interview Date</th>
-                <th>Decision</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for application in applications %}
-            <tr>
-                <td>{{ application.company }}</td>
-                <td>{{ application.title }}</td>
-                <td>{{ application.location }}</td>
-                <td>{{ application.salary }}</td>
-                <td>{{ application.date_applied }}</td>
-                <td>{{ application.status }}</td>
-                <td>{{ application.interview_date }}</td>
-                <td>{{ application.decision }}</td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="8">No job applications found.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    
+    <!-- Applications Table -->
+    <div class="table-section">
+        <h2>Application Details</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Title</th>
+                    <th>Location</th>
+                    <th>Salary</th>
+                    <th>Date Applied</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for application in applications %}
+                <tr>
+                    <td>{{ application.company }}</td>
+                    <td>{{ application.title }}</td>
+                    <td>{{ application.location }}</td>
+                    <td>{{ application.salary }}</td>
+                    <td>{{ application.date_applied }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
+    <!-- Progress Table -->
+    <div class="table-section">
+        <h2>Application Progress</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Status</th>
+                    <th>Interview Date</th>
+                    <th>Decision</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for application in applications %}
+                <tr>
+                    <td>{{ application.company }}</td>
+                    <td>{{ application.status }}</td>
+                    <td>{{ application.interview_date }}</td>
+                    <td>{{ application.decision }}</td>
+                    <td>
+                        <button onclick="openEditProgress('{{ application.id }}')" class="edit-btn">Edit Progress</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Edit Progress Modal -->
+    <div id="editProgressModal" class="modal">
+        <div class="modal-content">
+            <h3>Update Progress</h3>
+            <form action="/update_progress" method="POST">
+                <input type="hidden" id="application_id" name="application_id">
+            
+                <label for="status">Status:</label>
+                <select name="status" id="status">
+                    <option value="Applied">Applied</option>
+                    <option value="Interview Scheduled">Interview Scheduled</option>
+                    <option value="Under Review">Under Review</option>
+                    <option value="Offer">Offer</option>
+                </select>
+
+                <label for="interview_date">Interview Date:</label>
+                <input type="date" id="interview_date" name="interview_date">
+
+                <label for="decision">Decision:</label>
+                <select name="decision" id="decision">
+                    <option value="Pending">Pending</option>
+                    <option value="Accepted">Accepted</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+
+                <button type="submit">Update</button>
+            </form>
+        </div>
+    </div>
     <a href="/myprofile">Go to My Profile</a>
 </body>
 </html>
