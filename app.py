@@ -163,6 +163,7 @@ def addjobs():
         return redirect(url_for('dashboard'))
 
     return render_template('add_jobs.html')
+@app.route('/logout')
 def logout():
     session.clear()
     flash('You have been logged out successfully.', 'success')

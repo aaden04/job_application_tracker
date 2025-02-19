@@ -129,3 +129,29 @@ a:hover {
       margin-left: auto;
       margin-right: auto;
   }
+
+.navbar {
+    background-color: #333;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand a {
+    color: white;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 2rem;
+    padding: 0.5rem;
+}
+
+.nav-links a:hover {
+    background-color: #555;
+    border-radius: 4px;
+}
