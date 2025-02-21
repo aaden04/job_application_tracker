@@ -33,8 +33,7 @@ class UserRepository:
         with self._connection.connection.cursor() as cursor:
             cursor.execute('SELECT * FROM users')
             rows = cursor.fetchall()
-
-        return [User(row[0], row[1], row[2], row[3]) for row in rows]  
+        return [User(row['id'], row['name'], row['email'], row['password']) for row in rows]
 
     def get_user(self, user_id):
         with self._connection.connection.cursor() as cursor:
